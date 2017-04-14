@@ -1,0 +1,15 @@
+version: '2'
+services:
+    postgres:
+        image: postgres:9.4.4
+        ports:
+            - "5432:5432"
+    web:
+        build: .
+        command: mix phoenix.server
+        volumes:
+            - .:/app
+        ports:
+            - "4000:4000"
+        depends_on:
+            - postgres
