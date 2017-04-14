@@ -3,9 +3,8 @@ defmodule Manager.User do
 
   schema "users" do
     field :email, :string
-    field :token, :string
     field :name, :string
-
+    many_to_many :groups, Manager.Group, join_through: "members"
     timestamps()
   end
 
@@ -14,7 +13,9 @@ defmodule Manager.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :token, :name])
-    |> validate_required([:email, :token, :name])
+    |> cast(params, [:email, :name])
+    |> validate_required([:email, :name])
+    |> unique_constraint(:email)
+    |> unique_constraint(:name)
   end
 end

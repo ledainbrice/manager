@@ -12,7 +12,6 @@ defmodule Manager.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       email: user.email,
-      token: user.token,
       name: user.name}
   end
 end

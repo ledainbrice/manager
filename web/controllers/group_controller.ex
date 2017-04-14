@@ -1,23 +1,22 @@
-defmodule Manager.UserController do
+defmodule Manager.GroupController do
   use Manager.Web, :controller
-  alias Manager.UserMail
-  alias Manager.User
+
+  alias Manager.Group
 
   def index(conn, _params) do
-    users = Repo.all(User)
-    render(conn, "index.json", users: users)
+    groups = Repo.all(Group)
+    render(conn, "index.json", groups: groups)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+  def create(conn, %{"group" => group_params}) do
+    changeset = Group.changeset(%Group{}, group_params)
 
     case Repo.insert(changeset) do
-      {:ok, user} ->
-        UserMail.login("url",user)
+      {:ok, group} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", user_path(conn, :show, user))
-        |> render("show.json", user: user)
+        |> put_resp_header("location", group_path(conn, :show, group))
+        |> render("show.json", group: group)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -26,17 +25,17 @@ defmodule Manager.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
-    render(conn, "show.json", user: user)
+    group = Repo.get!(Group, id)
+    render(conn, "show.json", group: group)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
+  def update(conn, %{"id" => id, "group" => group_params}) do
+    group = Repo.get!(Group, id)
+    changeset = Group.changeset(group, group_params)
 
     case Repo.update(changeset) do
-      {:ok, user} ->
-        render(conn, "show.json", user: user)
+      {:ok, group} ->
+        render(conn, "show.json", group: group)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -45,13 +44,12 @@ defmodule Manager.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    group = Repo.get!(Group, id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    Repo.delete!(user)
+    Repo.delete!(group)
 
     send_resp(conn, :no_content, "")
   end
-
 end

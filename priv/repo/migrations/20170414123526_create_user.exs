@@ -5,7 +5,6 @@ defmodule Manager.Repo.Migrations.CreateUser do
     create table(:users, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :email, :string,null: false
-      add :token, :string
       add :name, :string,null: false
 
       timestamps()
