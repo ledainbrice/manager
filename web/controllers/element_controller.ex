@@ -25,7 +25,7 @@ defmodule Manager.ElementController do
   end
 
   def show(conn, %{"id" => id}) do
-    element = Repo.get!(Element, id)
+    element = Repo.get!(Element, id) |> Element.load_parents |> Element.load_children
     render(conn, "show.json", element: element)
   end
 
