@@ -1,4 +1,4 @@
-defmodule Manager.UserMail do
+defmodule Manager.UserMailer do
   import Bamboo.Email
 
   @from "imoca@yopmail.com"

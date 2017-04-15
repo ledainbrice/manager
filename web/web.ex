@@ -39,6 +39,7 @@ defmodule Manager.Web do
 
       import Manager.Router.Helpers
       import Manager.Gettext
+      alias Manager.Mailer
     end
   end
 

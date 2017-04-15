@@ -1,6 +1,6 @@
 defmodule Manager.UserController do
   use Manager.Web, :controller
-  alias Manager.UserMail
+  alias Manager.UserMailer
   alias Manager.User
 
   def index(conn, _params) do
@@ -13,7 +13,7 @@ defmodule Manager.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
-        UserMail.login("url",user)
+        UserMailer.login("url",user) |> Mailer.deliver_later
         conn
         |> put_status(:created)
         |> put_resp_header("location", user_path(conn, :show, user))

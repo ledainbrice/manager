@@ -1,10 +1,11 @@
-defmodule Manager.Group do
+defmodule Manager.Element do
   use Manager.Web, :model
 
-  schema "groups" do
+  schema "elements" do
     field :name, :string
-    many_to_many :users, Manager.User, join_through: "members"
-    has_many :elements, Element
+    field :body, :string
+    belongs_to :group, Manager.Group
+
     timestamps()
   end
 
@@ -13,7 +14,7 @@ defmodule Manager.Group do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [:name, :body])
+    |> validate_required([:name, :body])
   end
 end

@@ -17,6 +17,7 @@ defmodule Manager.Router do
     pipe_through :browser # Use the default browser stack
     resources "/users", UserController, except: []
     resources "/groups", GroupController, except: []
+    resources "/elements", ElementController, except: []
 
 
     get "/", PageController, :index
