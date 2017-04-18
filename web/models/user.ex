@@ -4,7 +4,7 @@ defmodule Manager.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    many_to_many :groups, Manager.Group, join_through: "members"
+    has_many :members, Manager.Member
     timestamps()
   end
 

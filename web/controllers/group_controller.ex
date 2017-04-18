@@ -8,7 +8,9 @@ defmodule Manager.GroupController do
     render(conn, "index.json", groups: groups)
   end
 
-  def create(conn, %{"group" => group_params}) do
+  def create(conn, %{"group" => group_params,"user_id" => user_id }) do
+
+    group_params = Map.merge!(group_params,%{members: [%{user_id: user_id, role: "admin"}]})
     changeset = Group.changeset(%Group{}, group_params)
 
     case Repo.insert(changeset) do

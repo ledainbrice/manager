@@ -35,7 +35,7 @@ defmodule Manager.ElementController do
 
     case Repo.update(changeset) do
       {:ok, element} ->
-        render(conn, "show.json", element: element)
+        render(conn, "element.json", element: element)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

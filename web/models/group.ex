@@ -3,7 +3,7 @@ defmodule Manager.Group do
 
   schema "groups" do
     field :name, :string
-    many_to_many :users, Manager.User, join_through: "members"
+    has_many :members, Manager.Member
     has_many :elements, Element
     timestamps()
   end
@@ -15,5 +15,6 @@ defmodule Manager.Group do
     struct
     |> cast(params, [:name])
     |> validate_required([:name])
+    |> cast_assoc(:members, required: true)
   end
 end

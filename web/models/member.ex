@@ -3,7 +3,8 @@ defmodule Manager.Member do
 
   schema "members" do
     field :role, :string
-
+    belongs_to :user, Manager.User
+    belongs_to :group, Manager.Group
     timestamps()
   end
 

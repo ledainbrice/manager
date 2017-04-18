@@ -14,7 +14,8 @@ defmodule Manager.ElementView do
       name: element.name,
       body: element.body,
       group_id: element.group_id,
-      children: render_many(element.children, Manager.ElementView, "element.json")
+      parent: element.element_id,
+      children: render_many(element.children, Manager.ElementView, "element_children.json")
     }
   end
 
@@ -23,6 +24,7 @@ defmodule Manager.ElementView do
       name: element.name,
       body: element.body,
       group_id: element.group_id,
+      parent: element.element_id
     }
   end
 end
