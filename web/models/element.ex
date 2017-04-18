@@ -44,7 +44,11 @@ defmodule Manager.Element do
   """
   def load_children(model), do: load_children(model, 10)
 
-  def load_children(_, limit) when limit < 0, do: raise "Recursion limit reached"
+  def load_children(model, limit) when limit < 1, do: model
+
+  def load_children(%Manager.Element{children: %Ecto.Association.NotLoaded{}} = model, 1) do
+    model |> Repo.preload(:children)
+  end
 
   def load_children(%Manager.Element{children: %Ecto.Association.NotLoaded{}} = model, limit) do
     model = model |> Repo.preload(:children) # maybe include a custom query here to preserve some order

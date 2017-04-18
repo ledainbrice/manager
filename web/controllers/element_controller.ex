@@ -24,8 +24,8 @@ defmodule Manager.ElementController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    element = Repo.get!(Element, id) |> Element.load_parents |> Element.load_children
+  def show(conn, params = %{"id" => id}) do
+    element = Repo.get!(Element, id) |> Element.load_parents |> Element.load_children(String.to_integer(params["limit"])||0)
     render(conn, "show.json", element: element)
   end
 

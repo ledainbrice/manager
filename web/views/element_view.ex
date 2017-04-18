@@ -6,16 +6,17 @@ defmodule Manager.ElementView do
   end
 
   def render("show.json", %{element: element}) do
-    %{data: render_one(element, Manager.ElementView, "element_children.json")}
+    %{data: render_one(element, Manager.ElementView, "element.json")}
   end
 
-  def render("element_children.json", %{element: element}) do
+  def render("element.json", %{element: element} = %{element: %{id: id, children: children} }) when is_list(children) do
+    IO.inspect element
     %{id: element.id,
       name: element.name,
       body: element.body,
       group_id: element.group_id,
       parent: element.element_id,
-      children: render_many(element.children, Manager.ElementView, "element_children.json")
+      children: render_many(element.children, Manager.ElementView, "element.json")
     }
   end
 
