@@ -10,9 +10,8 @@ defmodule Manager.GroupController do
 
   def create(conn, %{"group" => group_params,"user_id" => user_id }) do
 
-    group_params = Map.merge!(group_params,%{members: [%{user_id: user_id, role: "admin"}]})
+    group_params = Map.merge(group_params,%{"members" => [%{"user_id" => user_id, "role" => "admin"}]})
     changeset = Group.changeset(%Group{}, group_params)
-
     case Repo.insert(changeset) do
       {:ok, group} ->
         conn
@@ -27,7 +26,7 @@ defmodule Manager.GroupController do
   end
 
   def show(conn, %{"id" => id}) do
-    group = Repo.get!(Group, id)
+    group = Repo.get!(Group, id)|> Repo.preload(members: :user)
     render(conn, "show.json", group: group)
   end
 

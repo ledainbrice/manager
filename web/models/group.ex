@@ -4,7 +4,7 @@ defmodule Manager.Group do
   schema "groups" do
     field :name, :string
     has_many :members, Manager.Member
-    has_many :elements, Element
+    has_many :elements, Manager.Element
     timestamps()
   end
 

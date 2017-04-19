@@ -13,7 +13,7 @@ defmodule Manager.Member do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:role])
+    |> cast(params, [:role,:user_id])
     |> validate_required([:role])
   end
 end
