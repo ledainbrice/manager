@@ -53,4 +53,21 @@ defmodule Manager.GroupController do
 
     send_resp(conn, :no_content, "")
   end
+
+  def invited(conn, %{"id" => id,"user_id" => user_id}) do
+    group = Repo.get!(Group, id)
+    user = Repo.get!(Manager.User, user_id)
+    changeset = Manager.Member.changeset(%Manager.Member{},%{"role" => "invited","user_id" => user_id,"group_id" => id})
+    case Repo.insert(changeset) do
+      {:ok, member} ->
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", group_path(conn, :show, group))
+        |> render("show.json", group: group)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Manager.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
 end

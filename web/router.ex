@@ -19,6 +19,7 @@ defmodule Manager.Router do
     resources "/groups", GroupController, except: []
     resources "/elements", ElementController, except: []
     get "/groups/:id/elements", ElementController, :starter # only element's root
+    post "/groups/:id/users/:user_id", GroupController, :invited # add member to group with invited role
 
     get "/", PageController, :index
   end

@@ -6,7 +6,9 @@ defmodule Manager.GroupView do
   end
 
   def render("show.json", %{group: group}) do
-    %{data: render_one(group, Manager.GroupView, "group.json")}
+    %{
+      data: render_one(group, Manager.GroupView, "group.json"),
+      members: render_many(group.members, Manager.MemberView, "member.json")}
   end
 
   def render("group.json", %{group: group}) do
