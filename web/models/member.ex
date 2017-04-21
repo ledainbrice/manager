@@ -15,5 +15,6 @@ defmodule Manager.Member do
     struct
     |> cast(params, [:role,:user_id])
     |> validate_required([:role])
+    |> unique_constraint(:unique_user_group_access)
   end
 end

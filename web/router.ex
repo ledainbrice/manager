@@ -18,7 +18,7 @@ defmodule Manager.Router do
     resources "/users", UserController, except: []
     resources "/groups", GroupController, except: []
     resources "/elements", ElementController, except: []
-
+    get "/groups/:id/elements", ElementController, :starter # only element's root
 
     get "/", PageController, :index
   end

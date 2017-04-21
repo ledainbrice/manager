@@ -9,6 +9,7 @@ defmodule Manager.Repo.Migrations.CreateMember do
       add :group_id, references(:groups, on_delete: :nothing, type: :binary_id)
       timestamps()
     end
+    create unique_index(:members, [:user_id, :group_id])
 
   end
 end

@@ -8,6 +8,14 @@ defmodule Manager.ElementController do
     render(conn, "index.json", elements: elements)
   end
 
+  def starter(conn, %{"id" => id}) do
+    query = from e in Element,
+              where: e.group_id == ^id,
+              where: is_nil(e.element_id)
+    elements =   Repo.all(query)
+    render(conn, "index.json", elements: elements)
+  end
+
   def create(conn, %{"element" => element_params}) do
     changeset = Element.changeset(%Element{}, element_params)
 
